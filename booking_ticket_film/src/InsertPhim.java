@@ -98,6 +98,7 @@ public class InsertPhim extends javax.swing.JFrame {
         TenPhim = new javax.swing.JTextField();
         TheLoai = new javax.swing.JTextField();
         ThoiLuong = new javax.swing.JTextField();
+        print = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -155,6 +156,11 @@ public class InsertPhim extends javax.swing.JFrame {
 
         Delete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Delete.setText("Xóa");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
 
         Cancel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Cancel.setText("Hủy");
@@ -182,6 +188,14 @@ public class InsertPhim extends javax.swing.JFrame {
             }
         });
 
+        print.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        print.setText("In");
+        print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,20 +203,22 @@ public class InsertPhim extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(27, 27, 27)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(MaPhim)
-                                .addComponent(TenPhim)
-                                .addComponent(TheLoai)
-                                .addComponent(ThoiLuong))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(MaPhim)
+                                    .addComponent(TenPhim)
+                                    .addComponent(TheLoai)
+                                    .addComponent(ThoiLuong))))
+                        .addGap(60, 60, 60))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(Add)
@@ -212,8 +228,9 @@ public class InsertPhim extends javax.swing.JFrame {
                         .addComponent(Delete)
                         .addGap(18, 18, 18)
                         .addComponent(Cancel)
-                        .addGap(55, 55, 55)))
-                .addGap(60, 60, 60))
+                        .addGap(18, 18, 18)
+                        .addComponent(print)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,11 +254,13 @@ public class InsertPhim extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Add)
-                    .addComponent(Update)
-                    .addComponent(Delete)
-                    .addComponent(Cancel))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Add)
+                        .addComponent(Update)
+                        .addComponent(Delete)
+                        .addComponent(Cancel))
+                    .addComponent(print, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(60, 60, 60))
         );
 
@@ -280,6 +299,10 @@ public class InsertPhim extends javax.swing.JFrame {
 
     private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
         // TODO add your handling code here:
+        MaPhim.setText("");
+        TenPhim.setText("");
+        TheLoai.setText("");
+        ThoiLuong.setText("");
     }//GEN-LAST:event_CancelActionPerformed
 
     private void MaPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaPhimActionPerformed
@@ -297,20 +320,24 @@ public class InsertPhim extends javax.swing.JFrame {
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         // TODO add your handling code here:
         try{
-           Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-           connection = DriverManager.getConnection(url, username, password);
-            statement = connection.prepareStatement("CALL sua_phim (?,?,?,?);");
-            statement.setString(1, MaPhim.getText());
-            statement.setString(2, TenPhim.getText());
-            statement.setString(3, TheLoai.getText());
-            statement.setString(4, ThoiLuong.getText());
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            connection = DriverManager.getConnection(url, username, password);
+            DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
+            int SelectedRows = Phim_Table.getSelectedRow();
+            String old_maphim = records.getValueAt(SelectedRows, 0).toString();
+            statement = connection.prepareStatement("CALL sua_phim (?,?,?,?,?);");
+            statement.setString(1,old_maphim);
+            statement.setString(2, MaPhim.getText());
+            statement.setString(3, TenPhim.getText());
+            statement.setString(4, TheLoai.getText());
+            statement.setString(5, ThoiLuong.getText());
             statement.executeUpdate();
            JOptionPane.showMessageDialog(this, "Record Updated");
            upDateDB();
         }
         catch(Exception ex){
-            JOptionPane.showMessageDialog(this, "Record Updated Fail");
-            
+//            JOptionPane.showMessageDialog(this, "Record Updated Fail");
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
     }//GEN-LAST:event_UpdateActionPerformed
@@ -332,6 +359,39 @@ public class InsertPhim extends javax.swing.JFrame {
         // TODO add your handling code here:
         upDateDB();
     }//GEN-LAST:event_formWindowActivated
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+            DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
+            int SelectedRows = Phim_Table.getSelectedRow();
+            String old_maphim = records.getValueAt(SelectedRows, 0).toString();
+            statement = connection.prepareStatement("Call Xoa_phim(?);");
+            statement.setString(1,old_maphim);
+            statement.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Record Delete");
+            upDateDB();
+            
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printActionPerformed
+        // TODO add your handling code here:
+        MessageFormat header = new MessageFormat("Printing in progress");
+        MessageFormat footer = new MessageFormat("page (0, number, interger)");
+        
+        try{
+            Phim_Table.print(JTable.PrintMode.NORMAL, header, footer);
+        }
+        catch(java.awt.print.PrinterException ex){
+            System.err.format("No Printer found", ex.getMessage());
+        }
+    }//GEN-LAST:event_printActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,5 +449,6 @@ public class InsertPhim extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton print;
     // End of variables declaration//GEN-END:variables
 }
