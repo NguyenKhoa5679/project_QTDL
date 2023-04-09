@@ -26,7 +26,7 @@ public class InsertPhim extends javax.swing.JFrame {
     
     private static final String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
     private static final String username = "root";
-    private static final String password = "";
+    private static final String password = "khoa";
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet rs = null;
