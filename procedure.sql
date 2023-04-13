@@ -1,3 +1,5 @@
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 delimiter $$
 drop function if exists KT_phim $$
 create function KT_phim (MaPhim varchar(45))
@@ -69,7 +71,7 @@ begin
 end; $$
 delimiter ;
 
-call sua_phim('LLS','LLA', 'LaLaLand', 'tinh cam', '1:20:00');
+call sua_phim('LLL','LLA', 'LaLaLand', 'tinh cam', '1:20:00');
 
 
 -- Them Lich chieu ----------------------------------------------------------------------------------
@@ -122,5 +124,19 @@ begin
 end; $$
 delimiter ;
 
+-- Xoa LichChieu
 
+delimiter $$
+drop procedure if exists XoaLichChieu $$
+create procedure XoaLichChieu(IDLichChieu int)
+begin
+	declare count_phim int;
+	select count(1) into count_phim from lichchieu where lichchieu.idlichchieu = IDLichChieu;
+    if count_phim > 0 then
+		delete from Lichchieu where lichchieu.idlichchieu = IDLichChieu;
+	else
+		select 'Khong tim thay ket qua nao';
+	end if;
+end; $$
+delimiter ;
 
