@@ -456,7 +456,21 @@ public class InsertLichChieu extends javax.swing.JFrame {
 
     private void InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertActionPerformed
         // TODO add your handling code here:
-        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+            statement = connection.prepareStatement("CALL ThemLichChieu(?,?,?,?)");
+            statement.setInt(1, idLichChieu);
+            statement.setString(2, Rap.getText());
+            statement.setString(3, Phim.getText());
+            statement.setString(4, BatDau.getText());
+            statement.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Record Update");
+            upDateDB();
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_InsertActionPerformed
 
     /**

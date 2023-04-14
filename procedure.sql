@@ -57,7 +57,7 @@ Call Xoa_phim('LLL');
 
 Delimiter $$
 drop procedure if exists Sua_phim $$ 
-create procedure Sua_phim(old_maphim varchar(45),MaPhim varchar(45), Tenphim varchar(45), Theloai varchar(45), thoiluong time)
+create procedure Suanhanvien_phim(old_maphim varchar(45),MaPhim varchar(45), Tenphim varchar(45), Theloai varchar(45), thoiluong time)
 begin 
 	start transaction;
 		if KT_phim(old_maphim) then
@@ -160,7 +160,7 @@ begin
 		from lichchieu inner join phim on lichchieu.maphim = phim.maphim
 		where phim.tenphim = tenphim and lichchieu.marap = Marap and lichchieu.BatDau = batdau;
 	if count_phim = 0 then
-		select maphim into tmp
+		select lichchieu.maphim into tmp
 			from lichchieu inner join phim on lichchieu.maphim = phim.maphim
 			where phim.tenphim = tenphim;
 		select max(idlichchieu) into id from lichchieu;
@@ -170,3 +170,5 @@ begin
 	end if;
 end; $$
 delimiter ;
+
+
