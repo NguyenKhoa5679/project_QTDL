@@ -74,18 +74,6 @@ delimiter ;
 call sua_phim('LLL','LLA', 'LaLaLand', 'tinh cam', '1:20:00');
 
 
--- Them Lich chieu ----------------------------------------------------------------------------------
-
-delimiter $$
-drop procedure if exists Them_lichchieu $$
-create procedure Them_lichchieu(idlicchieu int(11), Marap varchar(45), maphim varchar(45), batdau datetime, ketthuc datetime)
-begin
-	insert into `film_tickets_booking`.`lichchieu` value (idlicchieu , Marap, maphim, batdau, ketthuc);
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Them lich chieu khong thanh cong';
-end; $$
-delimiter ;
-
--- Xoa lich chieu -----------------------------------------------------------------------------------
 
 -- Tim Kiem phim------------------------------------------------------------------------------------
 delimiter $$
@@ -140,3 +128,45 @@ begin
 end; $$
 delimiter ;
 
+-- sua LichChieu
+delimiter $$
+drop procedure if exists SuaLichChieu $$
+create procedure SuaLichChieu(IDLichChieu int, rap varchar(45), tenphim varchar(45), bd time)
+begin
+	declare count_phim int;
+    declare mphim varchar(45);
+    declare thoiluong time;
+	select count(1) into count_phim from phim where phim.tenphim = tenphim;
+    if count_phim > 0 then
+		select Maphim, thoiluong into mphim, thoiluong from phim where phim.tenphim = tenphim;
+        update lichchieu set maphim = mphim, marap = rap, batdau = bd where idlichchieu = IDLichChieu;
+	else
+		select 'Khong tim thay ket qua nao';
+	end if;
+end; $$
+delimiter ;
+
+
+-- Them Lich chieu ----------------------------------------------------------------------------------
+
+delimiter $$
+drop procedure if exists ThemLichChieu $$
+create procedure ThemLichChieu(Marap varchar(45), tenphim varchar(45), batdau time)
+begin
+	declare id int;
+    declare count_phim int;
+    declare tmp, tmp_bd, tmp_rap varchar(50);
+    select count(1) into count_phim
+		from lichchieu inner join phim on lichchieu.maphim = phim.maphim
+		where phim.tenphim = tenphim and lichchieu.marap = Marap and lichchieu.BatDau = batdau;
+	if count_phim = 0 then
+		select maphim into tmp
+			from lichchieu inner join phim on lichchieu.maphim = phim.maphim
+			where phim.tenphim = tenphim;
+		select max(idlichchieu) into id from lichchieu;
+		insert into `film_tickets_booking`.`lichchieu` value ( (id+1) , Marap, tmp, batdau);
+	else
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Them lich chieu khong thanh cong';
+	end if;
+end; $$
+delimiter ;

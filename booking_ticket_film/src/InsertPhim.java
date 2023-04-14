@@ -42,12 +42,12 @@ public class InsertPhim extends javax.swing.JFrame {
     }
     
 //    ==============================================START_FUNCTION==========================================
+    
     public void upDateDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
             statement = connection.prepareStatement("SELECT * FROM PHIM");
-            
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
             
@@ -99,6 +99,7 @@ public class InsertPhim extends javax.swing.JFrame {
         TheLoai = new javax.swing.JTextField();
         ThoiLuong = new javax.swing.JTextField();
         print = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -108,15 +109,19 @@ public class InsertPhim extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setLabelFor(MaPhim);
         jLabel1.setText("Mã Phim");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setLabelFor(TenPhim);
         jLabel2.setText("Tên phim");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setLabelFor(TheLoai);
         jLabel3.setText("Thể loại");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setLabelFor(ThoiLuong);
         jLabel4.setText("Thời lượng");
 
         Phim_Table.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -140,6 +145,7 @@ public class InsertPhim extends javax.swing.JFrame {
 
         Add.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Add.setText("Thêm");
+        Add.setAlignmentX(1.0F);
         Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddActionPerformed(evt);
@@ -148,6 +154,7 @@ public class InsertPhim extends javax.swing.JFrame {
 
         Update.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Update.setText("Sửa");
+        Update.setAlignmentX(1.0F);
         Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpdateActionPerformed(evt);
@@ -156,6 +163,7 @@ public class InsertPhim extends javax.swing.JFrame {
 
         Delete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Delete.setText("Xóa");
+        Delete.setAlignmentX(1.0F);
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteActionPerformed(evt);
@@ -164,6 +172,7 @@ public class InsertPhim extends javax.swing.JFrame {
 
         Cancel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Cancel.setText("Hủy");
+        Cancel.setAlignmentX(1.0F);
         Cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelActionPerformed(evt);
@@ -190,52 +199,58 @@ public class InsertPhim extends javax.swing.JFrame {
 
         print.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         print.setText("In");
+        print.setAlignmentX(1.0F);
         print.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printActionPerformed(evt);
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setText("CẬP NHẬT PHIM");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(MaPhim)
-                                    .addComponent(TenPhim)
-                                    .addComponent(TheLoai)
-                                    .addComponent(ThoiLuong))))
-                        .addGap(60, 60, 60))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ThoiLuong)
+                            .addComponent(TheLoai)
+                            .addComponent(TenPhim)
+                            .addComponent(MaPhim)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(Add)
+                        .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(Update)
+                        .addComponent(Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(Delete)
+                        .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(Cancel)
+                        .addComponent(print, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(print)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(68, 68, 68))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(191, 191, 191))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(MaPhim))
@@ -254,14 +269,14 @@ public class InsertPhim extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Update, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Add)
-                        .addComponent(Update)
-                        .addComponent(Delete)
-                        .addComponent(Cancel))
-                    .addComponent(print, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(60, 60, 60))
+                        .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(print, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(46, 46, 46))
         );
 
         pack();
@@ -273,10 +288,6 @@ public class InsertPhim extends javax.swing.JFrame {
            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
            connection = DriverManager.getConnection(url, username, password);
 //           statement = connection.prepareStatement("INSERT INTO PHIM (MaPhim, TenPhim, TheLoai, ThoiLuong) VALUE (?,?,?,?);");
-//           statement.setString(1, MaPhim.getText());
-//           statement.setString(2, TenPhim.getText());
-//           statement.setString(3, TheLoai.getText());
-//           statement.setString(4, ThoiLuong.getText());
             statement = connection.prepareStatement("CALL ThemPhim(?,?,?,?);");
             statement.setString(1, MaPhim.getText());
             statement.setString(2, TenPhim.getText());
@@ -448,6 +459,7 @@ public class InsertPhim extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton print;
     // End of variables declaration//GEN-END:variables

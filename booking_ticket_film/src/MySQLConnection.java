@@ -12,19 +12,58 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection {
-    public static void main(String args[]){
-        String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
-        String username = "root";
-        String password = "";
+    public Connection connection;
+    public String url;
+    public String username;
+    public String password;
+    
+    public MySQLConnection(){
+        url = "jdbc:mysql://localhost:3306/film_tickets_booking";
+        username = "root";
+        password = "";
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            Connection connection;
-            connection = DriverManager.getConnection(url, username, password);
-            System.out.print("Noi ket thanh cong");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection connection;
+            connection = DriverManager.getConnection(this.url, this.username, this.password);
+//            return connection;
+//            System.out.print("Noi ket thanh cong");
+        }
+        catch(Exception ex){
+//            System.out.print("Noi ket khong thanh cong");
+//            ex.printStackTrace();
+        }
+    }
+    
+    public Connection Connect(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection connection;
+            connection = DriverManager.getConnection(this.url, this.username, this.password);
+            return connection;
+//            System.out.print("Noi ket thanh cong");
         }
         catch(Exception ex){
             System.out.print("Noi ket khong thanh cong");
             ex.printStackTrace();
         }
+        return connection;
+    }
+    
+    public void main(String args[]){
+//        String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
+//        String username = "root";
+//        String password = "";
+//        try{
+//            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+//            Connection connection;
+//            connection = DriverManager.getConnection(url, username, password);
+//            System.out.print("Noi ket thanh cong");
+//        }
+//        catch(Exception ex){
+//            System.out.print("Noi ket khong thanh cong");
+//            ex.printStackTrace();
+//        }
+
+//          Connect();
     }
 }
