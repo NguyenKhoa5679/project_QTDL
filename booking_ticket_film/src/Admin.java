@@ -25,21 +25,85 @@ public class Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ThemPhim = new javax.swing.JButton();
+        ThemLichChieu = new javax.swing.JButton();
+        ThongKeVe = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        ThemPhim.setText("Cập Nhật Phim");
+        ThemPhim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemPhimActionPerformed(evt);
+            }
+        });
+
+        ThemLichChieu.setText("Cập nhật lịch chiếu");
+        ThemLichChieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemLichChieuActionPerformed(evt);
+            }
+        });
+
+        ThongKeVe.setText("Thống kê vé");
+
+        jButton1.setText("X");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(187, 187, 187)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ThongKeVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ThemPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ThemLichChieu, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addContainerGap(206, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addGap(57, 57, 57)
+                .addComponent(ThemPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ThemLichChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(ThongKeVe, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ThemPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemPhimActionPerformed
+        // TODO add your handling code here:
+        InsertPhim phim = new InsertPhim();
+        phim.setVisible(true);
+    }//GEN-LAST:event_ThemPhimActionPerformed
+
+    private void ThemLichChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemLichChieuActionPerformed
+        // TODO add your handling code here:
+        InsertLichChieu  LichChieu = new InsertLichChieu();
+        LichChieu.setVisible(true);
+    }//GEN-LAST:event_ThemLichChieuActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(fase);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,5 +141,9 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ThemLichChieu;
+    private javax.swing.JButton ThemPhim;
+    private javax.swing.JButton ThongKeVe;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
