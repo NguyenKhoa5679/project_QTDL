@@ -30,7 +30,7 @@ public class ThongKeVe extends javax.swing.JFrame {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
-            statement = connection.prepareStatement("");
+            statement = connection.prepareStatement("Call ThongKeVeBan(?,?)");
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
             
@@ -94,13 +94,13 @@ public class ThongKeVe extends javax.swing.JFrame {
 
         Result_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Tên Phim", "Vé đã bán"
+                "Tên Phim", "Rạp", "Bắt đầu", "Vé đã bán"
             }
         ));
         jScrollPane1.setViewportView(Result_Table);

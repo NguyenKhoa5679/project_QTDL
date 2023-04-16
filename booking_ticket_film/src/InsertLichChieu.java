@@ -1,5 +1,6 @@
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -30,9 +32,9 @@ public class InsertLichChieu extends javax.swing.JFrame {
     ResultSet rs = null;
     int q, i,id, deletiItem;
     
-    private String TenPhim = "";
+    private String MaPhim = "";
     private String MaRap = "";
-    private int idLichChieu = 0;
+    private int idLichChieu;
     
 //    ==============================================START_FUNCTION==========================================
     
@@ -48,13 +50,16 @@ public class InsertLichChieu extends javax.swing.JFrame {
             
             DefaultTableModel records = (DefaultTableModel) LichChieu_Table.getModel();
             records.setRowCount(0);
-            
+            int count = 0;
             while(rs.next()){
+                count ++;
                 Vector columnData = new Vector();
                 for ( i = 1; i <= q; i++){
-                    columnData.add(rs.getString("idLichChieu"));
+//                    columnData.add(rs.getString("idLichChieu"));
+                    columnData.add(count);
                     columnData.add(rs.getString("TenPhim"));
                     columnData.add(rs.getString("MaRap"));
+                    columnData.add(rs.getString("NgayChieu"));
                     columnData.add(rs.getString("BatDau"));
                 }
                 records.addRow(columnData);
@@ -147,6 +152,8 @@ public class InsertLichChieu extends javax.swing.JFrame {
         Print = new javax.swing.JButton();
         Cancel = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        Ngay = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -160,14 +167,14 @@ public class InsertLichChieu extends javax.swing.JFrame {
 
         LichChieu_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Lịch Chiếu", "Phim", "Rạp", "Bắt đầu"
+                "Lịch Chiếu", "Phim", "Rạp", "Ngày chiếu", "Bắt đầu"
             }
         ));
         LichChieu_Table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -276,10 +283,25 @@ public class InsertLichChieu extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel5.setText("Ngày");
+
+        Ngay.setText("YYYY-MM-DD");
+        Ngay.setToolTipText("mm/dd/yyyy");
+        Ngay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NgayActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,21 +316,6 @@ public class InsertLichChieu extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(33, 33, 33)
-                        .addComponent(BatDau))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(Phim)
-                            .addComponent(Rap)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -316,12 +323,23 @@ public class InsertLichChieu extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BatDau)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(Phim)
+                            .addComponent(Rap)
+                            .addComponent(Ngay))))
                 .addGap(74, 74, 74))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Cancel, Delete, Insert, Print, Update});
@@ -341,13 +359,17 @@ public class InsertLichChieu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(Rap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(BatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(jLabel5)
+                    .addComponent(Ngay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
@@ -388,7 +410,23 @@ public class InsertLichChieu extends javax.swing.JFrame {
         int SelectedRows = Phim_Table.getSelectedRow();
         
         Phim.setText(records.getValueAt(SelectedRows, 1).toString());
-        TenPhim = records.getValueAt(SelectedRows, 0).toString();
+//        TenPhim = records.getValueAt(SelectedRows, 0).toString();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+            statement = connection.prepareStatement("Select * from phim where tenphim = ?");
+            statement.setString(1, Phim.getText());
+            rs = statement.executeQuery();
+            while(rs.next()){
+                MaPhim = rs.getString("MaPhim");
+//                JOptionPane.showMessageDialog(null, MaPhim);
+            }
+            connection.close();
+            
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_Phim_TableMouseClicked
 
     private void Rap_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Rap_TableMouseClicked
@@ -407,10 +445,37 @@ public class InsertLichChieu extends javax.swing.JFrame {
         
         Phim.setText(records.getValueAt(SelectedRows, 1).toString());
         Rap.setText(records.getValueAt(SelectedRows, 2).toString());
-        BatDau.setText(records.getValueAt(SelectedRows, 3).toString());
-        
+        BatDau.setText(records.getValueAt(SelectedRows, 4).toString());
+        Ngay.setText(records.getValueAt(SelectedRows, 3).toString());
         MaRap = records.getValueAt(SelectedRows, 2).toString();
-        idLichChieu = Integer.parseInt(records.getValueAt(SelectedRows, 0).toString());
+//        idLichChieu = Integer.parseInt(records.getValueAt(SelectedRows, 0).toString());
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+            statement = connection.prepareStatement("Select * from phim where tenphim = ?");
+            statement.setString(1, Phim.getText());
+            rs = statement.executeQuery();
+            while(rs.next()){
+                MaPhim = rs.getString("MaPhim");
+//                JOptionPane.showMessageDialog(null, MaPhim);
+            }
+            
+            statement = connection.prepareStatement("SELECT * FROM LichChieu where MaRap = ? and MaPhim = ? and NgayChieu = ? and BatDau = ?");
+            statement.setString(1, Rap.getText());
+            statement.setString(2, MaPhim);
+            statement.setString(3,Ngay.getText());
+            statement.setString(4, BatDau.getText());
+            rs = statement.executeQuery();
+            
+            while(rs.next()){
+                idLichChieu = rs.getInt("idLichChieu");
+            }
+            connection.close();
+            
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_LichChieu_TableMouseClicked
 
     private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
@@ -438,10 +503,17 @@ public class InsertLichChieu extends javax.swing.JFrame {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
-            statement = connection.prepareStatement("CALL XoaLichChieu(?)");
-            statement.setInt(1, idLichChieu);
+            statement = connection.prepareStatement("CALL XoaLichChieu(?,?,?,?)");
+//            statement.setInt(1, idLichChieu);
+            statement.setString(2, Rap.getText());
+            statement.setString(1, Phim.getText());
+            statement.setDate(3, Date.valueOf(Ngay.getText()));
+            statement.setString(4, BatDau.getText());
             statement.executeUpdate();
+            statement.executeUpdate();
+            connection.close();
             JOptionPane.showMessageDialog(this, "Record Delete");
+
             upDateDB();
         }
         catch(Exception ex){
@@ -454,13 +526,16 @@ public class InsertLichChieu extends javax.swing.JFrame {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
-            statement = connection.prepareStatement("CALL SuaLichChieu(?,?,?,?)");
+            statement = connection.prepareStatement("CALL SuaLichChieu(?,?,?,?,?)");
             statement.setInt(1, idLichChieu);
-            statement.setString(2, Rap.getText());
-            statement.setString(3, Phim.getText());
-            statement.setString(4, BatDau.getText());
+            statement.setString(2, MaPhim);
+            statement.setString(3, Rap.getText());
+            statement.setDate(4, Date.valueOf(Ngay.getText()));
+            statement.setString(5, BatDau.getText());
             statement.executeUpdate();
+            connection.close();
             JOptionPane.showMessageDialog(this, "Record Update");
+            
             upDateDB();
         }
         catch(Exception ex){
@@ -474,12 +549,17 @@ public class InsertLichChieu extends javax.swing.JFrame {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
-            statement = connection.prepareStatement("CALL ThemLichChieu(?,?,?,?)");
-            statement.setInt(1, idLichChieu);
+            statement = connection.prepareStatement("Call ThemLichChieu(?,?,?,?)");            
+//            java.util.Date jvday = new java.util.Date(Ngay.getText());
+//            java.sql.Date sqlDate = new java.sql.Date(jvday.getTime());
+//            System.out.print(Date.valueOf(day));
+//            java.sql.Date sqlDate = new java.sql.Date(new java.util.Date);
             statement.setString(2, Rap.getText());
-            statement.setString(3, Phim.getText());
+            statement.setString(1, Phim.getText());
+            statement.setDate(3, Date.valueOf(Ngay.getText()));
             statement.setString(4, BatDau.getText());
             statement.executeUpdate();
+            connection.close();
             JOptionPane.showMessageDialog(this, "Record Update");
             upDateDB();
         }
@@ -491,7 +571,12 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
+        new Admin().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void NgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NgayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NgayActionPerformed
 
     /**
      * @param args the command line arguments
@@ -534,6 +619,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private javax.swing.JButton Delete;
     private javax.swing.JButton Insert;
     private javax.swing.JTable LichChieu_Table;
+    private javax.swing.JTextField Ngay;
     private javax.swing.JTextField Phim;
     private javax.swing.JTable Phim_Table;
     private javax.swing.JButton Print;
@@ -545,6 +631,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
