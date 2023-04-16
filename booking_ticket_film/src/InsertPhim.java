@@ -39,6 +39,7 @@ public class InsertPhim extends javax.swing.JFrame {
      */
     public InsertPhim() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
 //    ==============================================START_FUNCTION==========================================
@@ -66,6 +67,7 @@ public class InsertPhim extends javax.swing.JFrame {
                 }
                 records.addRow(columnData);
             }
+            connection.close();
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
@@ -306,8 +308,10 @@ public class InsertPhim extends javax.swing.JFrame {
             statement.setString(3, TheLoai.getText());
             statement.setString(4, ThoiLuong.getText());
             statement.executeUpdate();
+            connection.close();
            JOptionPane.showMessageDialog(this, "Record Added");
            upDateDB();
+           
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(this, "Record Added Fail");   
@@ -355,6 +359,7 @@ public class InsertPhim extends javax.swing.JFrame {
             statement.setString(4, TheLoai.getText());
             statement.setString(5, ThoiLuong.getText());
             statement.executeUpdate();
+            connection.close();
            JOptionPane.showMessageDialog(this, "Record Updated");
            upDateDB();
         }
@@ -394,6 +399,7 @@ public class InsertPhim extends javax.swing.JFrame {
             statement = connection.prepareStatement("Call Xoa_phim(?);");
             statement.setString(1,old_maphim);
             statement.executeUpdate();
+            connection.close();
             JOptionPane.showMessageDialog(this, "Record Delete");
             upDateDB();
             

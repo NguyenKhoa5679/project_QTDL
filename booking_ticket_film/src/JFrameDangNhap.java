@@ -1,3 +1,4 @@
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.math.BigInteger; 
 import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException;
+import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
 
@@ -15,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author 
  */
 public class JFrameDangNhap extends javax.swing.JFrame {
+    private int MaKh;
 
     /**
      * Creates new form JFrameDangNhap
@@ -23,13 +26,13 @@ public class JFrameDangNhap extends javax.swing.JFrame {
         initComponents();
         setTitle("Đăng nhập đặt vé");
         setLocationRelativeTo(null);
-        this.getContentPane().setBackground(java.awt.Color.ORANGE); //Set màu cho background giao diện
+//        this.getContentPane().setBackground(java.awt.Color.ORANGE); //Set màu cho background giao diện
 
         btnlogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String accountName = txtacc.getText();
-                char[] password = txtpass.getPassword(); //Vì passwordfield không hiển thị dạng chuỗi mà hiển thị dạng mảng kí tự
+                String password = txtpass.getText(); //Vì passwordfield không hiển thị dạng chuỗi mà hiển thị dạng mảng kí tự
 
                 boolean check_value_empty = check_value_empty(accountName, password);
                 
@@ -41,9 +44,10 @@ public class JFrameDangNhap extends javax.swing.JFrame {
                         setVisible(false);
                         java.awt.EventQueue.invokeLater(new Runnable() {
                             public void run() {
-                                JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
+//                                JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
                                 DatVe datve = new DatVe(MaKh);
-                                       }
+                                datve.setVisible(true);
+                            }
                       
                         });
                     } else {
@@ -56,7 +60,7 @@ public class JFrameDangNhap extends javax.swing.JFrame {
         });
     }
 
-    public boolean check_value_empty(String firstV, char secondV[]) {
+    public boolean check_value_empty(String firstV, String secondV) {
         String pass_input = new String(secondV);
         if (!firstV.equals("") && !pass_input.equals("")) {
             return false;
@@ -92,11 +96,11 @@ public class JFrameDangNhap extends javax.swing.JFrame {
         } 
     }
      
-    public int login_status(String accountName, char pass[]){
+    public int login_status(String accountName, String pass){
         JDBC_Connect connectJDBC = new JDBC_Connect();
         Connection conn = connectJDBC.connect();
         
-        String query_string = "select * from account where taikhoan = ? and matkhau = ?";
+        String query_string = "select * from kh where username = ? and password = ?";
         
         PreparedStatement pstm = null;
         
@@ -109,11 +113,12 @@ public class JFrameDangNhap extends javax.swing.JFrame {
             pstm.setString(2, getMd5(pass_input));
             
             //Thực hiện truy vấn và trả về đối tượng ResultSet
+            
             ResultSet rs = pstm.executeQuery();
             int check = 0;
             //Duyệt lần lượt kết quả trả về
             while(rs.next()){
-                int id = rs.getInt("id");
+                MaKh = rs.getInt("MaKh");
                 //Tồn tại 1 hàng dữ liệu
                 check = 1;
             }
@@ -160,11 +165,13 @@ public class JFrameDangNhap extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 51, 51));
         setForeground(new java.awt.Color(255, 153, 51));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Đăng Nhập ");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Tài khoản:");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mật khẩu:");
 
         txtacc.addActionListener(new java.awt.event.ActionListener() {
@@ -183,7 +190,7 @@ public class JFrameDangNhap extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 0, 51));
 
-        btnlogin2.setText("Đăng kí");
+        btnlogin2.setText("Đăng ký");
         btnlogin2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnlogin2ActionPerformed(evt);
@@ -197,29 +204,39 @@ public class JFrameDangNhap extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(76, 76, 76)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel4))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(3, 3, 3))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(btnlogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtacc, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtpass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))))
-                .addContainerGap(61, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(145, 145, 145)
+                        .addComponent(jLabel4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtacc)
+                                    .addComponent(txtpass)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnlogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(88, 88, 88)
+                                .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(145, 145, 145)))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnlogin, btnlogin2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -227,28 +244,31 @@ public class JFrameDangNhap extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(jLabel5)))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtacc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel3))
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtacc))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtpass)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnlogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(68, 68, 68)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnlogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnlogin, btnlogin2});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -267,6 +287,8 @@ public class JFrameDangNhap extends javax.swing.JFrame {
 
     private void btnlogin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlogin2ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new Main().setVisible(true);
     }//GEN-LAST:event_btnlogin2ActionPerformed
 
     /**
@@ -317,12 +339,29 @@ public class JFrameDangNhap extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtpass;
     // End of variables declaration//GEN-END:variables
 
-    private static class JDBC_Connect {
+    private static final String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
+    private static final String username = "root";
+    private static final String password = "khoa";
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet rs = null;
+    int q, i,id, deletiItem;
+    
+    private class JDBC_Connect {
 
         public JDBC_Connect() {
+            
         }
 
         private Connection connect() {
+            try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, username, password);
+            return connection;
+            }
+            catch(HeadlessException | ClassNotFoundException | SQLException ex){
+                JOptionPane.showMessageDialog(null, ex);
+            }
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
     }

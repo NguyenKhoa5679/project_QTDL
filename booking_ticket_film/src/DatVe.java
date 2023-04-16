@@ -70,14 +70,24 @@ public class DatVe extends javax.swing.JFrame {
     /**
      * Creates new form DatVe
      */
-    public DatVe() {
+    public DatVe(String tenPhim, String MaRap, String batdau, int MaKH1) {
         initComponents();
+        setLocationRelativeTo(null);
+        this.Phim_List.setSelectedItem(tenPhim);
+        this.Rap_List.setSelectedItem(MaRap);
+        this.BatDau_List.setSelectedItem(batdau);
+        this.MaKH = MaKH1;
     }
     
     public DatVe(int MaKh){
-        this.MaKH = Makh;
+        initComponents();
+        this.MaKH = MaKh;
+        setLocationRelativeTo(null);
     }
-
+    
+    public DatVe(){
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,20 +267,24 @@ public class DatVe extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        DatVeChonGhe dv = new DatVeChonGhe( 
-                Phim_List.getSelectedItem().toString(), 
-                Rap_List.getSelectedItem().toString(),
-                BatDau_List.getSelectedItem().toString()
-        );
+//        DatVeChonGhe dv = new DatVeChonGhe( 
+//                Phim_List.getSelectedItem().toString(), 
+//                Rap_List.getSelectedItem().toString(),
+//                BatDau_List.getSelectedItem().toString(), 
+//                this.MaKH
+//        );
+        DatVeChonGhe dv= new DatVeChonGhe();   
+        dv.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int Huy = JOptionPane.YES_NO_OPTION;
         JOptionPane.showMessageDialog(this, "Bạn muôn hủy quá trình đặt vé?", "Cảnh báo", JOptionPane.YES_NO_CANCEL_OPTION);
-    if(Huy == JOptionPane.YES_OPTION){
-        this.setVisible(false);
-    }
+        if(Huy == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -114,6 +114,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
      */
     public InsertLichChieu() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
