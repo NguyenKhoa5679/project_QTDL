@@ -18,9 +18,6 @@ import javax.swing.table.DefaultTableModel;
  * @author DELL
  */
 public class ThongKeVe extends javax.swing.JFrame {
-    private static final String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
-    private static final String username = "root";
-    private static final String password = "khoa";
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet rs = null;
@@ -28,8 +25,7 @@ public class ThongKeVe extends javax.swing.JFrame {
     
     public void upDateDB(){
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("Call ThongKeVeBan(?,?)");
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();

@@ -22,10 +22,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DatVe extends javax.swing.JFrame {
     
-    
-    private static final String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
-    private static final String username = "root";
-    private static final String password = "khoa";
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet rs = null;
@@ -38,8 +34,7 @@ public class DatVe extends javax.swing.JFrame {
     
     public void upDateDB(){
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("SELECT * FROM PHIM");
             
             String TenPhim = Phim_List.getSelectedItem().toString();
@@ -227,8 +222,7 @@ public class DatVe extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             
             statement = connection.prepareStatement("SELECT * FROM PHIM");
             rs = statement.executeQuery();

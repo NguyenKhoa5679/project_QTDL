@@ -23,10 +23,7 @@ import javax.swing.JFrame;
  * @author DELL
  */
 public class InsertPhim extends javax.swing.JFrame {
-    
-    private static final String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
-    private static final String username = "root";
-    private static final String password = "khoa";
+
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet rs = null;
@@ -46,8 +43,7 @@ public class InsertPhim extends javax.swing.JFrame {
     
     public void upDateDB(){
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("SELECT * FROM PHIM");
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
@@ -299,8 +295,8 @@ public class InsertPhim extends javax.swing.JFrame {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
         try{
-           Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-           connection = DriverManager.getConnection(url, username, password);
+        
+            connection = new MySQLConnection().Connect();
 //           statement = connection.prepareStatement("INSERT INTO PHIM (MaPhim, TenPhim, TheLoai, ThoiLuong) VALUE (?,?,?,?);");
             statement = connection.prepareStatement("CALL ThemPhim(?,?,?,?);");
             statement.setString(1, MaPhim.getText());
@@ -347,8 +343,7 @@ public class InsertPhim extends javax.swing.JFrame {
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
             int SelectedRows = Phim_Table.getSelectedRow();
             String old_maphim = records.getValueAt(SelectedRows, 0).toString();
@@ -391,8 +386,7 @@ public class InsertPhim extends javax.swing.JFrame {
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
             int SelectedRows = Phim_Table.getSelectedRow();
             String old_maphim = records.getValueAt(SelectedRows, 0).toString();
@@ -465,7 +459,7 @@ public class InsertPhim extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-    
+//    
    
     
 

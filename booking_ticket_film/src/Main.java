@@ -21,9 +21,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Main extends javax.swing.JFrame {
     
-    private static final String url = "jdbc:mysql://localhost:3306/film_tickets_booking";
-    private static final String username = "root";
-    private static final String password = "khoa";
+    
+    
+    
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet rs = null;
@@ -186,8 +186,7 @@ public class Main extends javax.swing.JFrame {
     private void DangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DangKyActionPerformed
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("SELECT * FROM KH WHERE username = ?");
             statement.setString(1, Username.getText());
             rs = statement.executeQuery();
@@ -210,7 +209,7 @@ public class Main extends javax.swing.JFrame {
             }
             connection.close();
         }
-        catch(HeadlessException | ClassNotFoundException | SQLException ex){
+        catch(HeadlessException | SQLException ex){
             JOptionPane.showMessageDialog(null, ex);
         }
         

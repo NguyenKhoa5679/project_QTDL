@@ -40,8 +40,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     
     public void upDateDB(){
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("SELECT * FROM LichChieu, Phim where lichChieu.MaPhim = Phim.MaPhim");
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
@@ -412,8 +411,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
         Phim.setText(records.getValueAt(SelectedRows, 1).toString());
 //        TenPhim = records.getValueAt(SelectedRows, 0).toString();
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("Select * from phim where tenphim = ?");
             statement.setString(1, Phim.getText());
             rs = statement.executeQuery();
@@ -450,8 +448,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
         MaRap = records.getValueAt(SelectedRows, 2).toString();
 //        idLichChieu = Integer.parseInt(records.getValueAt(SelectedRows, 0).toString());
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("Select * from phim where tenphim = ?");
             statement.setString(1, Phim.getText());
             rs = statement.executeQuery();
@@ -501,8 +498,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("CALL XoaLichChieu(?,?,?,?)");
 //            statement.setInt(1, idLichChieu);
             statement.setString(2, Rap.getText());
@@ -524,8 +520,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("CALL SuaLichChieu(?,?,?,?,?)");
             statement.setInt(1, idLichChieu);
             statement.setString(2, MaPhim);
@@ -547,8 +542,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private void InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertActionPerformed
         // TODO add your handling code here:
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("Call ThemLichChieu(?,?,?,?)");            
 //            java.util.Date jvday = new java.util.Date(Ngay.getText());
 //            java.sql.Date sqlDate = new java.sql.Date(jvday.getTime());
