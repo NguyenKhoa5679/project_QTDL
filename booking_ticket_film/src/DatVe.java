@@ -26,7 +26,7 @@ public class DatVe extends javax.swing.JFrame {
     PreparedStatement statement = null;
     ResultSet rs = null;
     int q, i,id, deletiItem;
-    int MaKH;
+    int MaKH = 1;
     
     
 
@@ -35,8 +35,10 @@ public class DatVe extends javax.swing.JFrame {
     public void upDateDB(){
         try{
             connection = new MySQLConnection().Connect();
-            statement = connection.prepareStatement("SELECT * FROM PHIM");
-            
+            statement = connection.prepareStatement("SELECT * FROM Rapchieu inner join lichchieu using(marap) inner join phim  using(maphim) where tenphim = ? and marap = ? and batdau = ?");
+            statement.setString(1, Phim_List.getSelectedItem().toString());
+            statement.setString(2, Rap_List.getSelectedItem().toString());
+            statement.setString(3, BatDau_List.getSelectedItem().toString());
             String TenPhim = Phim_List.getSelectedItem().toString();
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
@@ -45,17 +47,21 @@ public class DatVe extends javax.swing.JFrame {
             
             DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
             records.setRowCount(0);
-            
+            int count = 0;
             while(rs.next()){
+                count ++;
                 Vector columnData = new Vector();
                 for ( i = 1; i <= q; i++){
-                    columnData.add(rs.getString("MaPhim"));
+                    columnData.add(count);
                     columnData.add(rs.getString("TenPhim"));
                     columnData.add(rs.getString("TheLoai"));
-                    columnData.add(rs.getString("thoiLuong"));
+                    columnData.add(rs.getString("BatDau"));
+                    columnData.add(rs.getString("ThoiLuong"));
+                    columnData.add(rs.getString("MaRap"));
                 }
                 records.addRow(columnData);
             }
+            connection.close();
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
@@ -82,6 +88,7 @@ public class DatVe extends javax.swing.JFrame {
     
     public DatVe(){
         initComponents();
+        setLocationRelativeTo(null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,6 +123,11 @@ public class DatVe extends javax.swing.JFrame {
 
         jLabel2.setText("Phim");
 
+        Phim_List.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Phim_ListItemStateChanged(evt);
+            }
+        });
         Phim_List.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Phim_ListActionPerformed(evt);
@@ -139,10 +151,30 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(Phim_Table);
+        if (Phim_Table.getColumnModel().getColumnCount() > 0) {
+            Phim_Table.getColumnModel().getColumn(4).setHeaderValue("Thời lượng");
+        }
 
         jLabel9.setText("Rạp");
 
+        Rap_List.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Rap_ListItemStateChanged(evt);
+            }
+        });
+        Rap_List.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rap_ListActionPerformed(evt);
+            }
+        });
+
         jLabel10.setText("Bắt đầu");
+
+        BatDau_List.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                BatDau_ListItemStateChanged(evt);
+            }
+        });
 
         jButton1.setText("Tiếp tục");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -163,17 +195,13 @@ public class DatVe extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(251, 251, 251)
-                .addComponent(jLabel1)
-                .addContainerGap(200, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BatDau_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -189,15 +217,19 @@ public class DatVe extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(208, 208, 208)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(17, 17, 17)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(Phim_List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,16 +269,22 @@ public class DatVe extends javax.swing.JFrame {
             
 //            for ( i = 1; i <= q; i++){}
             i = 0;
+            records.removeAllElements();
             while(rs.next()){
                 
                 records.insertElementAt(rs.getString("TenPhim"), i);
                 i++; 
             }
             records.setSelectedItem(' ');
+            connection.close();
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
         }
+        
+        
+        
+        
     }//GEN-LAST:event_formWindowActivated
 
     private void Phim_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phim_TableMouseClicked
@@ -256,7 +294,34 @@ public class DatVe extends javax.swing.JFrame {
 
     private void Phim_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Phim_ListActionPerformed
         // TODO add your handling code here:
-//        Phim_ve.setText(Phim_List.getSelectedItem().toString());
+        try{
+            connection = new MySQLConnection().Connect();
+            
+            statement = connection.prepareStatement("SELECT distinct lichchieu.MaRap FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ?");
+            statement.setString(1, Phim_List.getSelectedItem().toString());
+            rs = statement.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            q = stData.getColumnCount();
+            
+//            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
+            
+            
+            DefaultComboBoxModel records = (DefaultComboBoxModel) Rap_List.getModel();
+            
+//            for ( i = 1; i <= q; i++){}
+            i = 0;
+            records.removeAllElements();
+            while(rs.next()){
+                records.insertElementAt(rs.getString("MaRap"), i);
+                i++; 
+            }
+//            records.setSelectedItem('');
+            connection.close();
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_Phim_ListActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -267,7 +332,7 @@ public class DatVe extends javax.swing.JFrame {
 //                BatDau_List.getSelectedItem().toString(), 
 //                this.MaKH
 //        );
-        DatVeChonGhe dv= new DatVeChonGhe();   
+        DatVeChonGhe dv= new DatVeChonGhe(Phim_List.getSelectedItem().toString(), Rap_List.getSelectedItem().toString(), BatDau_List.getSelectedItem().toString(), this.MaKH);   
         dv.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -281,40 +346,93 @@ public class DatVe extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void Phim_ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Phim_ListItemStateChanged
+        // TODO add your handling code here:
+        DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
+        records.removeAllElements();
+        records = (DefaultComboBoxModel) Rap_List.getModel();
+        records.removeAllElements();
+    }//GEN-LAST:event_Phim_ListItemStateChanged
+
+    private void BatDau_ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_BatDau_ListItemStateChanged
+        // TODO add your handling code here:
+        upDateDB();
+    }//GEN-LAST:event_BatDau_ListItemStateChanged
+
+    private void Rap_ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Rap_ListItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_Rap_ListItemStateChanged
+
+    private void Rap_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rap_ListActionPerformed
+        // TODO add your handling code here:
+        if (Rap_List.getSelectedIndex() == -1);
+        else
+        try{
+            connection = new MySQLConnection().Connect();
+            
+            statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ?");
+            statement.setString(1, Phim_List.getSelectedItem().toString());
+            statement.setString(2, Rap_List.getSelectedItem().toString());
+            rs = statement.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            q = stData.getColumnCount();
+            
+//            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
+            
+            
+            DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
+            
+//            for ( i = 1; i <= q; i++){}
+            i = 0;
+            records.removeAllElements();
+            while(rs.next()){
+                records.insertElementAt(rs.getString("BatDau"), i);
+                i++; 
+            }
+//            records.setSelectedItem('');
+            connection.close();
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_Rap_ListActionPerformed
+
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments 
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new DatVe().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DatVe().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BatDau_List;

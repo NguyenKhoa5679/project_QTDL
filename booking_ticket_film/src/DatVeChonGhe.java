@@ -1,5 +1,11 @@
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,10 +17,17 @@ import javax.swing.JOptionPane;
  * @author DELL
  */
 public class DatVeChonGhe extends javax.swing.JFrame {
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet rs = null;
+    int q, i,id, deletiItem;
     String tenPhim;
     String MaRap;
     String batdau;
     int MaKH;
+    String giave = "80000";
+    String hangghe;
+    int soghe;
 
     /**
      * Creates new form DatVeChonGhe
@@ -24,14 +37,48 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    DatVeChonGhe(String phim, String rap, String bd, int MaKH) {
+    public DatVeChonGhe(String phim, String rap, String bd, int MaKH) {
         initComponents();
         setLocationRelativeTo(null);
         this.tenPhim = phim;
         this.MaRap = rap;
         this.batdau = bd;
         this.MaKH = MaKH;
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody 
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody 
+    }
+    
+    public void upDateDB(){
+        try{
+            connection = new MySQLConnection().Connect();
+            statement = connection.prepareStatement("SELECT * FROM Rapchieu inner join lichchieu using(marap) inner join phim  using(maphim) inner join ghe using(marap)"
+                    + "where tenphim = ? and marap = ? and batdau = ? and idghe not in (select idghe from ghedadat) order by soghe asc");
+            statement.setString(1, this.tenPhim);
+            statement.setString(2, this.MaRap);
+            statement.setString(3, this.batdau);
+//            String TenPhim = Ghe_List.getSelectedItem().toString();
+            rs = statement.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            q = stData.getColumnCount();
+            
+            DefaultTableModel records = (DefaultTableModel) Ghe_Table.getModel();
+            records.setRowCount(0);
+            int count = 0;
+            while(rs.next()){
+                count ++;
+                Vector columnData = new Vector();
+                for ( i = 1; i <= q; i++){
+                    columnData.add(rs.getString("Hang_Ghe"));
+                    columnData.add(rs.getString("SoGhe"));
+                    columnData.add(this.giave + "đ");
+                }
+                records.addRow(columnData);
+            }
+            connection.close();
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
 
     /**
@@ -45,7 +92,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Ghe_Table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -66,7 +113,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("ĐẶT VÉ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Ghe_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -77,7 +124,12 @@ public class DatVeChonGhe extends javax.swing.JFrame {
                 "Hàng", "Ghế", "Giá vé"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        Ghe_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Ghe_TableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(Ghe_Table);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Phim");
@@ -105,6 +157,11 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         });
 
         jButton2.setText("Tiếp tục");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Trở về");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +246,8 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         TenPhim.setText(this.tenPhim);
         MRap.setText(this.MaRap);
         BatDau.setText(this.batdau);
+        
+        upDateDB();
     }//GEN-LAST:event_formWindowActivated
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -207,43 +266,58 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         dv.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new ThongTinVe(this.tenPhim, this.MaRap, this.batdau, this.hangghe, this.soghe, this.giave, this.MaKH).setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void Ghe_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ghe_TableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel records = (DefaultTableModel) Ghe_Table.getModel();
+        int SelectedRows = Ghe_Table.getSelectedRow();
+        this.hangghe = records.getValueAt(SelectedRows, 0).toString();
+        this.soghe = Integer.parseInt(records.getValueAt(SelectedRows, 1).toString());
+    }//GEN-LAST:event_Ghe_TableMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DatVeChonGhe().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(DatVeChonGhe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new DatVeChonGhe().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BatDau;
+    private javax.swing.JTable Ghe_Table;
     private javax.swing.JLabel MRap;
     private javax.swing.JLabel TenPhim;
     private javax.swing.JButton jButton1;
@@ -254,6 +328,5 @@ public class DatVeChonGhe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
