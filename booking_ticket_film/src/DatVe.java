@@ -359,7 +359,8 @@ public class DatVe extends javax.swing.JFrame {
         int Huy = JOptionPane.YES_NO_OPTION;
         JOptionPane.showMessageDialog(this, "Bạn muôn hủy quá trình đặt vé?", "Cảnh báo", JOptionPane.YES_NO_CANCEL_OPTION);
         if(Huy == JOptionPane.YES_OPTION){
-            this.setVisible(false);
+            this.dispose();
+            new User(this.MaKH).setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

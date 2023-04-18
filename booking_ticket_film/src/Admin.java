@@ -34,6 +34,7 @@ public class Admin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        ThemPhim.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ThemPhim.setText("Cập Nhật Phim");
         ThemPhim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -41,6 +42,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        ThemLichChieu.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ThemLichChieu.setText("Cập nhật lịch chiếu");
         ThemLichChieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,7 +50,13 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        ThongKeVe.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         ThongKeVe.setText("Thống kê vé");
+        ThongKeVe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThongKeVeActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("X");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -57,6 +65,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jButton2.setText("Đăng xuất");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,27 +85,31 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(107, 107, 107)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(ThongKeVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ThemPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ThemLichChieu, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)))
+                    .addComponent(ThongKeVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ThemPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ThemLichChieu, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ThemLichChieu, ThemPhim, ThongKeVe, jButton2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addGap(61, 61, 61)
-                .addComponent(ThemPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(ThemPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(ThemLichChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ThemLichChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(ThongKeVe, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addComponent(ThongKeVe, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ThemLichChieu, ThemPhim, ThongKeVe, jButton2});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -109,6 +122,7 @@ public class Admin extends javax.swing.JFrame {
 
     private void ThemLichChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemLichChieuActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
         InsertLichChieu  LichChieu = new InsertLichChieu();
         LichChieu.setVisible(true);
     }//GEN-LAST:event_ThemLichChieuActionPerformed
@@ -121,10 +135,17 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
         this.setVisible(false);
+        this.dispose();
         new JFrameDangNhap().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void ThongKeVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThongKeVeActionPerformed
+        // TODO add your handling code here:
+        new ThongKeVe().setVisible(true);
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_ThongKeVeActionPerformed
 
     /**
      * @param args the command line arguments

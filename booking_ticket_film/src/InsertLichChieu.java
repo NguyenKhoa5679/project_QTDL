@@ -501,8 +501,8 @@ public class InsertLichChieu extends javax.swing.JFrame {
             connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("CALL XoaLichChieu(?,?,?,?)");
 //            statement.setInt(1, idLichChieu);
-            statement.setString(2, Rap.getText());
-            statement.setString(1, Phim.getText());
+            statement.setString(1, Rap.getText());
+            statement.setString(2, Phim.getText());
             statement.setDate(3, Date.valueOf(Ngay.getText()));
             statement.setString(4, BatDau.getText());
             statement.executeUpdate();
@@ -544,8 +544,8 @@ public class InsertLichChieu extends javax.swing.JFrame {
         try{
             connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("Call ThemLichChieu(?,?,?,?)");            
-            statement.setString(2, Rap.getText());
-            statement.setString(1, Phim.getText());
+            statement.setString(1, Rap.getText());
+            statement.setString(2, Phim.getText());
             statement.setDate(3, Date.valueOf(Ngay.getText()));
             statement.setString(4, BatDau.getText());
             statement.executeUpdate();
@@ -561,6 +561,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
+        this.dispose();
         new Admin().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

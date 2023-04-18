@@ -31,10 +31,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButton2" pref="177" max="32767" attributes="0"/>
-                  <Component id="ThongKeVe" max="32767" attributes="0"/>
-                  <Component id="ThemPhim" max="32767" attributes="0"/>
-                  <Component id="ThemLichChieu" pref="177" max="32767" attributes="0"/>
+                  <Component id="jButton2" linkSize="1" pref="177" max="32767" attributes="0"/>
+                  <Component id="ThongKeVe" linkSize="1" max="32767" attributes="0"/>
+                  <Component id="ThemPhim" linkSize="1" max="32767" attributes="0"/>
+                  <Component id="ThemLichChieu" linkSize="1" pref="177" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -45,15 +45,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-              <Component id="ThemPhim" min="-2" pref="55" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="ThemPhim" linkSize="2" min="-2" pref="69" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="ThemLichChieu" min="-2" pref="57" max="-2" attributes="0"/>
+              <Component id="ThemLichChieu" linkSize="2" min="-2" pref="69" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="ThongKeVe" min="-2" pref="57" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="63" max="-2" attributes="0"/>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <Component id="ThongKeVe" linkSize="2" min="-2" pref="69" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jButton2" linkSize="2" min="-2" pref="67" max="-2" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,6 +61,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="ThemPhim">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="14" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="C&#x1ead;p Nh&#x1ead;t Phim"/>
       </Properties>
       <Events>
@@ -69,6 +72,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ThemLichChieu">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="14" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t l&#x1ecb;ch chi&#x1ebf;u"/>
       </Properties>
       <Events>
@@ -77,8 +83,14 @@
     </Component>
     <Component class="javax.swing.JButton" name="ThongKeVe">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="14" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea; v&#xe9;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ThongKeVeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
@@ -90,6 +102,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="14" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t"/>
       </Properties>
       <Events>

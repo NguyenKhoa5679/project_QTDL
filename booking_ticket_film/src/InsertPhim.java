@@ -346,13 +346,12 @@ public class InsertPhim extends javax.swing.JFrame {
             connection = new MySQLConnection().Connect();
             DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
             int SelectedRows = Phim_Table.getSelectedRow();
-            String old_maphim = records.getValueAt(SelectedRows, 0).toString();
-            statement = connection.prepareStatement("CALL sua_phim (?,?,?,?,?);");
-            statement.setString(1,old_maphim);
-            statement.setString(2, MaPhim.getText());
-            statement.setString(3, TenPhim.getText());
-            statement.setString(4, TheLoai.getText());
-            statement.setString(5, ThoiLuong.getText());
+//            String old_maphim = records.getValueAt(SelectedRows, 0).toString();
+            statement = connection.prepareStatement("CALL sua_phim (?,?,?,?);");
+            statement.setString(1, MaPhim.getText());
+            statement.setString(2, TenPhim.getText());
+            statement.setString(3, TheLoai.getText());
+            statement.setString(4, ThoiLuong.getText());
             statement.executeUpdate();
             connection.close();
            JOptionPane.showMessageDialog(this, "Record Updated");
@@ -419,7 +418,8 @@ public class InsertPhim extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        
+        this.dispose();
+        new Admin().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -459,9 +459,8 @@ public class InsertPhim extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-//    
+////    
    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;
