@@ -32,11 +32,9 @@
               <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jButton2" pref="177" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="ThongKeVe" max="32767" attributes="0"/>
-                      <Component id="ThemPhim" max="32767" attributes="0"/>
-                      <Component id="ThemLichChieu" pref="177" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="ThongKeVe" max="32767" attributes="0"/>
+                  <Component id="ThemPhim" max="32767" attributes="0"/>
+                  <Component id="ThemLichChieu" pref="177" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>

@@ -55,6 +55,7 @@ public class DatVe extends javax.swing.JFrame {
                     columnData.add(count);
                     columnData.add(rs.getString("TenPhim"));
                     columnData.add(rs.getString("TheLoai"));
+                    columnData.add(rs.getString("NgayChieu"));
                     columnData.add(rs.getString("BatDau"));
                     columnData.add(rs.getString("ThoiLuong"));
                     columnData.add(rs.getString("MaRap"));
@@ -110,6 +111,8 @@ public class DatVe extends javax.swing.JFrame {
         BatDau_List = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        Ngay_List = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -121,6 +124,7 @@ public class DatVe extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("ĐẶT VÉ");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Phim");
 
         Phim_List.addItemListener(new java.awt.event.ItemListener() {
@@ -136,13 +140,13 @@ public class DatVe extends javax.swing.JFrame {
 
         Phim_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Tên Phim", "Thể Loại", "Bắt đầu", "Thời lượng", "Rạp"
+                "STT", "Tên Phim", "Thể Loại", "Ngày chiếu", "Bắt đầu", "Thời lượng", "Rạp"
             }
         ));
         Phim_Table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,10 +155,8 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(Phim_Table);
-        if (Phim_Table.getColumnModel().getColumnCount() > 0) {
-            Phim_Table.getColumnModel().getColumn(4).setHeaderValue("Thời lượng");
-        }
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Rạp");
 
         Rap_List.addItemListener(new java.awt.event.ItemListener() {
@@ -168,11 +170,17 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Bắt đầu");
 
         BatDau_List.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 BatDau_ListItemStateChanged(evt);
+            }
+        });
+        BatDau_List.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BatDau_ListActionPerformed(evt);
             }
         });
 
@@ -190,27 +198,19 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setText("Ngày");
+
+        Ngay_List.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Ngay_ListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BatDau_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Phim_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Rap_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(75, 75, 75))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -218,7 +218,24 @@ public class DatVe extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
-                .addGap(208, 208, 208)
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Ngay_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Phim_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Rap_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BatDau_List, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(75, 75, 75))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(258, 258, 258)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -237,13 +254,17 @@ public class DatVe extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(Rap_List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(Ngay_List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(BatDau_List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                    .addComponent(BatDau_List, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(11, 11, 11))
         );
@@ -280,11 +301,7 @@ public class DatVe extends javax.swing.JFrame {
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
-        }
-        
-        
-        
-        
+        }   
     }//GEN-LAST:event_formWindowActivated
 
     private void Phim_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phim_TableMouseClicked
@@ -332,7 +349,7 @@ public class DatVe extends javax.swing.JFrame {
 //                BatDau_List.getSelectedItem().toString(), 
 //                this.MaKH
 //        );
-        DatVeChonGhe dv= new DatVeChonGhe(Phim_List.getSelectedItem().toString(), Rap_List.getSelectedItem().toString(), BatDau_List.getSelectedItem().toString(), this.MaKH);   
+        DatVeChonGhe dv= new DatVeChonGhe(Phim_List.getSelectedItem().toString(), Rap_List.getSelectedItem().toString(), Ngay_List.getSelectedItem().toString(), BatDau_List.getSelectedItem().toString(), this.MaKH);   
         dv.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -382,6 +399,42 @@ public class DatVe extends javax.swing.JFrame {
 //            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
             
             
+            DefaultComboBoxModel records = (DefaultComboBoxModel) Ngay_List.getModel();
+            
+//            for ( i = 1; i <= q; i++){}
+            i = 0;
+            records.removeAllElements();
+            while(rs.next()){
+                records.insertElementAt(rs.getString("NgayChieu"), i);
+                i++; 
+            }
+//            records.setSelectedItem('');
+            connection.close();
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_Rap_ListActionPerformed
+
+    private void Ngay_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ngay_ListActionPerformed
+        // TODO add your handling code here:
+        if (Rap_List.getSelectedIndex() == -1 || Ngay_List.getSelectedIndex() == -1);
+        else
+        try{
+            connection = new MySQLConnection().Connect();
+            
+            statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ? and ngaychieu = ?");
+            statement.setString(1, Phim_List.getSelectedItem().toString());
+            statement.setString(2, Rap_List.getSelectedItem().toString());
+            statement.setString(3, Ngay_List.getSelectedItem().toString());
+            rs = statement.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            q = stData.getColumnCount();
+            
+//            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
+            
+            
             DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
             
 //            for ( i = 1; i <= q; i++){}
@@ -397,45 +450,51 @@ public class DatVe extends javax.swing.JFrame {
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
         }
-    }//GEN-LAST:event_Rap_ListActionPerformed
+    }//GEN-LAST:event_Ngay_ListActionPerformed
+
+    private void BatDau_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatDau_ListActionPerformed
+        // TODO add your handling code here:
+        upDateDB();
+    }//GEN-LAST:event_BatDau_ListActionPerformed
 
     /**
      * @param args the command line arguments 
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DatVe().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new DatVe().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BatDau_List;
+    private javax.swing.JComboBox<String> Ngay_List;
     private javax.swing.JComboBox<String> Phim_List;
     private javax.swing.JTable Phim_Table;
     private javax.swing.JComboBox<String> Rap_List;
@@ -444,6 +503,7 @@ public class DatVe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

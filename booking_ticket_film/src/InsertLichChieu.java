@@ -544,10 +544,6 @@ public class InsertLichChieu extends javax.swing.JFrame {
         try{
             connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("Call ThemLichChieu(?,?,?,?)");            
-//            java.util.Date jvday = new java.util.Date(Ngay.getText());
-//            java.sql.Date sqlDate = new java.sql.Date(jvday.getTime());
-//            System.out.print(Date.valueOf(day));
-//            java.sql.Date sqlDate = new java.sql.Date(new java.util.Date);
             statement.setString(2, Rap.getText());
             statement.setString(1, Phim.getText());
             statement.setDate(3, Date.valueOf(Ngay.getText()));

@@ -25,6 +25,7 @@ public class ThongTinVe extends javax.swing.JFrame {
     String giave = "80000";
     String hangghe;
     int soghe;
+    String ngay;
     /**
      * Creates new form ThongTinVe
      */
@@ -33,11 +34,12 @@ public class ThongTinVe extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    public ThongTinVe(String tenPhim, String Marap, String batdau, String hangghe, int soghe, String giave, int MaKH){
+    public ThongTinVe(String tenPhim, String Marap,String ngay, String batdau, String hangghe, int soghe, String giave, int MaKH){
         initComponents();
         setLocationRelativeTo(null);
         this.tenPhim = tenPhim;
         this.MaRap = Marap;
+        this.ngay = ngay;
         this.batdau = batdau;
         this.hangghe = hangghe;
         this.soghe = soghe;
@@ -71,6 +73,8 @@ public class ThongTinVe extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         Gia = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        Ngay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -92,15 +96,15 @@ public class ThongTinVe extends javax.swing.JFrame {
         jLabel4.setText("Bắt đầu");
 
         TenPhim.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TenPhim.setText("jLabel5");
+        TenPhim.setText("LaLaLand");
         TenPhim.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         MRap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        MRap.setText("jLabel5");
+        MRap.setText("1");
         MRap.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         BatDau.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BatDau.setText("jLabel6");
+        BatDau.setText("13:00:00");
         BatDau.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -110,11 +114,11 @@ public class ThongTinVe extends javax.swing.JFrame {
         jLabel6.setText("Số ghế");
 
         HangGhe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        HangGhe.setText("jLabel7");
+        HangGhe.setText("1");
         HangGhe.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         SoGhe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        SoGhe.setText("jLabel8");
+        SoGhe.setText("1");
         SoGhe.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -141,11 +145,18 @@ public class ThongTinVe extends javax.swing.JFrame {
         });
 
         Gia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Gia.setText("Giá vé");
+        Gia.setText("80000");
         Gia.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Giá Vé");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Ngày chiếu");
+
+        Ngay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Ngay.setText("2023-04-23");
+        Ngay.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,40 +167,46 @@ public class ThongTinVe extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(jLabel1))
+                .addGap(130, 130, 130)
+                .addComponent(jLabel1)
+                .addGap(72, 72, 72))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel5))
+                                    .addGap(147, 147, 147)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(HangGhe)
+                                        .addComponent(SoGhe)
+                                        .addComponent(Gia)
+                                        .addComponent(BatDau)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3))
+                                    .addGap(147, 147, 147)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(MRap)
+                                        .addComponent(TenPhim))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(120, 120, 120)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(MRap)
-                                    .addComponent(TenPhim)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(HangGhe)
-                                    .addComponent(BatDau)
-                                    .addComponent(SoGhe)
-                                    .addComponent(Gia))))))
-                .addContainerGap(135, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(37, 37, 37))
+                                .addComponent(jLabel7)
+                                .addGap(134, 134, 134)
+                                .addComponent(Ngay)
+                                .addGap(0, 41, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addGap(31, 31, 31))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BatDau, Gia, HangGhe, MRap, SoGhe, TenPhim, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel9});
@@ -212,30 +229,31 @@ public class ThongTinVe extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(MRap, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(32, 32, 32))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(BatDau)
-                        .addGap(18, 18, 18)
-                        .addComponent(HangGhe)
-                        .addGap(18, 18, 18)
-                        .addComponent(SoGhe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Gia)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(Ngay))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(BatDau))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(HangGhe))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(SoGhe))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Gia))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton1))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BatDau, Gia, HangGhe, MRap, SoGhe, TenPhim, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel9});
@@ -256,7 +274,7 @@ public class ThongTinVe extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new DatVeChonGhe(this.tenPhim, this.MaRap, this.batdau, this.MaKH).setVisible(true);
+        new DatVeChonGhe(this.tenPhim, this.MaRap, this.ngay, this.batdau, this.MaKH).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -264,6 +282,7 @@ public class ThongTinVe extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.TenPhim.setText(this.tenPhim);
         this.MRap.setText(this.MaRap);
+        this.Ngay.setText(this.ngay);
         this.BatDau.setText(this.batdau);
         this.HangGhe.setText(this.hangghe);
         this.SoGhe.setText(Integer.toString(this.soghe));
@@ -276,7 +295,19 @@ public class ThongTinVe extends javax.swing.JFrame {
         try{
             connection = new MySQLConnection().Connect();
             
-            statement = connection.prepareStatement("");
+            statement = connection.prepareStatement("Call DatVe(?,?,?,?,?,?,?, ?)");
+            statement.setString(1, this.tenPhim);
+            statement.setString(2, this.MaRap);
+            statement.setString(3, this.ngay);
+            statement.setString(4, this.batdau);
+            statement.setString(5, this.hangghe);
+            statement.setInt(6, this.soghe);
+            statement.setString(7, this.giave);
+            statement.setInt(8, this.MaKH);
+            statement.execute();
+            JOptionPane.showMessageDialog(null, "Đặt vé thành công");
+            new User(this.MaKH).setVisible(true);
+            this.dispose();
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
@@ -323,6 +354,7 @@ public class ThongTinVe extends javax.swing.JFrame {
     private javax.swing.JLabel Gia;
     private javax.swing.JLabel HangGhe;
     private javax.swing.JLabel MRap;
+    private javax.swing.JLabel Ngay;
     private javax.swing.JLabel SoGhe;
     private javax.swing.JLabel TenPhim;
     private javax.swing.JButton jButton1;
@@ -334,6 +366,7 @@ public class ThongTinVe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }

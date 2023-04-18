@@ -28,6 +28,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
     String giave = "80000";
     String hangghe;
     int soghe;
+    String ngay;
 
     /**
      * Creates new form DatVeChonGhe
@@ -37,12 +38,13 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    public DatVeChonGhe(String phim, String rap, String bd, int MaKH) {
+    public DatVeChonGhe(String phim, String rap,String ngay, String bd, int MaKH) {
         initComponents();
         setLocationRelativeTo(null);
         this.tenPhim = phim;
         this.MaRap = rap;
         this.batdau = bd;
+        this.ngay = ngay;
         this.MaKH = MaKH;
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody 
     }
@@ -51,10 +53,17 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         try{
             connection = new MySQLConnection().Connect();
             statement = connection.prepareStatement("SELECT * FROM Rapchieu inner join lichchieu using(marap) inner join phim  using(maphim) inner join ghe using(marap)"
-                    + "where tenphim = ? and marap = ? and batdau = ? and idghe not in (select idghe from ghedadat) order by soghe asc");
+                    + "where tenphim = ? and marap = ? and ngaychieu = ? and batdau = ? "
+                    + "and idghe not in (select idghe from ghedadat inner join lichchieu using(idlichchieu) where tenphim = ? and marap = ? and ngaychieu = ? and batdau = ?)"
+                    + "order by soghe asc"); 
             statement.setString(1, this.tenPhim);
             statement.setString(2, this.MaRap);
-            statement.setString(3, this.batdau);
+            statement.setString(3, this.ngay);
+            statement.setString(4, this.batdau);
+            statement.setString(5, this.tenPhim);
+            statement.setString(6, this.MaRap);
+            statement.setString(7, this.ngay);
+            statement.setString(8, this.batdau);
 //            String TenPhim = Ghe_List.getSelectedItem().toString();
             rs = statement.executeQuery();
             ResultSetMetaData stData = rs.getMetaData();
@@ -102,6 +111,8 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        Ngay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -141,13 +152,16 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         jLabel4.setText("Bắt đầu");
 
         TenPhim.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TenPhim.setText("jLabel5");
+        TenPhim.setText("LaLaLand");
+        TenPhim.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         MRap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        MRap.setText("jLabel5");
+        MRap.setText("1");
+        MRap.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         BatDau.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BatDau.setText("jLabel6");
+        BatDau.setText("13:00:00");
+        BatDau.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jButton1.setText("X");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +184,13 @@ public class DatVeChonGhe extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Ngày chiếu");
+
+        Ngay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Ngay.setText("2023-04-23");
+        Ngay.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,25 +204,25 @@ public class DatVeChonGhe extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(BatDau))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel2)
-                                                .addComponent(jLabel3))
-                                            .addGap(69, 69, 69)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(MRap)
-                                                .addComponent(TenPhim)))))))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 56, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(BatDau, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Ngay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TenPhim, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MRap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(139, 139, 139)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
@@ -210,6 +231,9 @@ public class DatVeChonGhe extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(25, 25, 25))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BatDau, MRap, Ngay, TenPhim});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -226,17 +250,23 @@ public class DatVeChonGhe extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(MRap, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Ngay))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(BatDau))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addGap(27, 27, 27))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BatDau, MRap, Ngay, TenPhim});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -246,7 +276,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         TenPhim.setText(this.tenPhim);
         MRap.setText(this.MaRap);
         BatDau.setText(this.batdau);
-        
+        Ngay.setText(this.ngay);
         upDateDB();
     }//GEN-LAST:event_formWindowActivated
 
@@ -269,7 +299,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new ThongTinVe(this.tenPhim, this.MaRap, this.batdau, this.hangghe, this.soghe, this.giave, this.MaKH).setVisible(true);
+        new ThongTinVe(this.tenPhim, this.MaRap, this.ngay, this.batdau, this.hangghe, this.soghe, this.giave, this.MaKH).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void Ghe_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ghe_TableMouseClicked
@@ -319,6 +349,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
     private javax.swing.JLabel BatDau;
     private javax.swing.JTable Ghe_Table;
     private javax.swing.JLabel MRap;
+    private javax.swing.JLabel Ngay;
     private javax.swing.JLabel TenPhim;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -327,6 +358,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
