@@ -45,7 +45,7 @@ public class ThongTinVe extends javax.swing.JFrame {
         this.soghe = soghe;
         this.giave = giave;
         this.MaKH = MaKH;
-             
+        setTitle("Đặt vé");
     }
 
     /**

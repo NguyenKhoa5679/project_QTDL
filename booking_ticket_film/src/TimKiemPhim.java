@@ -68,6 +68,7 @@ public class TimKiemPhim extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.maKh = maKH;
+        setTitle("Tìm kiếm phim");
     }
 
     /**
@@ -199,14 +200,16 @@ public class TimKiemPhim extends javax.swing.JFrame {
 
                 DefaultTableModel records = (DefaultTableModel) Phim_Table.getModel();
                 records.setRowCount(0);
+                int count = 0;
                 while(rs.next()){
+                    count++;
                     Vector columnData = new Vector();
                     for ( i = 1; i <= q; i++){
+                        columnData.add(count);
                         columnData.add(rs.getString("TenPhim"));
-                        columnData.add(rs.getString("MaRap"));
-                        columnData.add(rs.getString("NgayChieu"));
-                        columnData.add(rs.getString("BatDau"));
-                        columnData.add(rs.getString("veban"));
+                        columnData.add(rs.getString("TheLoai"));
+                        columnData.add(rs.getString("ThoiLuong"));
+                        
 
                     }
                     records.addRow(columnData);

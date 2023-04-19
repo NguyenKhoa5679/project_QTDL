@@ -254,6 +254,7 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="Ngay_List">
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="Ngay_ListItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Ngay_ListActionPerformed"/>
       </Events>
       <AuxValues>

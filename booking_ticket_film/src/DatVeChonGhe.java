@@ -36,6 +36,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
     public DatVeChonGhe() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Đặt vé");
     }
 
     public DatVeChonGhe(String phim, String rap,String ngay, String bd, int MaKH) {
@@ -46,6 +47,7 @@ public class DatVeChonGhe extends javax.swing.JFrame {
         this.batdau = bd;
         this.ngay = ngay;
         this.MaKH = MaKH;
+        setTitle("Đặt vé");
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody 
     }
     

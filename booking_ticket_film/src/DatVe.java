@@ -79,17 +79,20 @@ public class DatVe extends javax.swing.JFrame {
         this.Rap_List.setSelectedItem(MaRap);
         this.BatDau_List.setSelectedItem(batdau);
         this.MaKH = MaKH1;
+       setTitle("Đặt vé");
     }
     
     public DatVe(int MaKh){
         initComponents();
         this.MaKH = MaKh;
         setLocationRelativeTo(null);
+        setTitle("Đặt vé");
     }
     
     public DatVe(){
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Khách hàng");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -201,6 +204,11 @@ public class DatVe extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Ngày");
 
+        Ngay_List.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Ngay_ListItemStateChanged(evt);
+            }
+        });
         Ngay_List.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Ngay_ListActionPerformed(evt);
@@ -368,95 +376,117 @@ public class DatVe extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
         records.removeAllElements();
+        records = (DefaultComboBoxModel) Ngay_List.getModel();
+        records.removeAllElements();
         records = (DefaultComboBoxModel) Rap_List.getModel();
         records.removeAllElements();
     }//GEN-LAST:event_Phim_ListItemStateChanged
 
     private void BatDau_ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_BatDau_ListItemStateChanged
         // TODO add your handling code here:
-        upDateDB();
+//        upDateDB();
     }//GEN-LAST:event_BatDau_ListItemStateChanged
 
     private void Rap_ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Rap_ListItemStateChanged
         // TODO add your handling code here:
-        
+        DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
+        records.removeAllElements();
+        records = (DefaultComboBoxModel) Ngay_List.getModel();
+        records.removeAllElements();
     }//GEN-LAST:event_Rap_ListItemStateChanged
 
     private void Rap_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rap_ListActionPerformed
         // TODO add your handling code here:
-        if (Rap_List.getSelectedIndex() == -1);
-        else
-        try{
-            connection = new MySQLConnection().Connect();
-            
-            statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ?");
-            statement.setString(1, Phim_List.getSelectedItem().toString());
-            statement.setString(2, Rap_List.getSelectedItem().toString());
-            rs = statement.executeQuery();
-            ResultSetMetaData stData = rs.getMetaData();
-            
-            q = stData.getColumnCount();
-            
-//            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
-            
-            
+        if (Rap_List.getSelectedItem() == null || Phim_List.getSelectedItem() == null){
             DefaultComboBoxModel records = (DefaultComboBoxModel) Ngay_List.getModel();
-            
-//            for ( i = 1; i <= q; i++){}
-            i = 0;
             records.removeAllElements();
-            while(rs.next()){
-                records.insertElementAt(rs.getString("NgayChieu"), i);
-                i++; 
-            }
-//            records.setSelectedItem('');
-            connection.close();
+            records = (DefaultComboBoxModel) BatDau_List.getModel();
+            records.removeAllElements();
         }
-        catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex);
+        else{
+            try{
+                connection = new MySQLConnection().Connect();
+
+                statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ?");
+                statement.setString(1, Phim_List.getSelectedItem().toString());
+                statement.setString(2, Rap_List.getSelectedItem().toString());
+                rs = statement.executeQuery();
+                ResultSetMetaData stData = rs.getMetaData();
+
+                q = stData.getColumnCount();
+
+    //            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
+
+
+                DefaultComboBoxModel records = (DefaultComboBoxModel) Ngay_List.getModel();
+
+    //            for ( i = 1; i <= q; i++){}
+                i = 0;
+                records.removeAllElements();
+                while(rs.next()){
+                    records.insertElementAt(rs.getString("NgayChieu"), i);
+                    i++; 
+                }
+    //            records.setSelectedItem('');
+                connection.close();
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            }
         }
     }//GEN-LAST:event_Rap_ListActionPerformed
 
     private void Ngay_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ngay_ListActionPerformed
         // TODO add your handling code here:
-        if (Rap_List.getSelectedIndex() == -1 || Ngay_List.getSelectedIndex() == -1);
-        else
-        try{
-            connection = new MySQLConnection().Connect();
-            
-            statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ? and ngaychieu = ?");
-            statement.setString(1, Phim_List.getSelectedItem().toString());
-            statement.setString(2, Rap_List.getSelectedItem().toString());
-            statement.setString(3, Ngay_List.getSelectedItem().toString());
-            rs = statement.executeQuery();
-            ResultSetMetaData stData = rs.getMetaData();
-            
-            q = stData.getColumnCount();
-            
-//            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
-            
-            
+        if (Phim_List.getSelectedItem() == null ||  Rap_List.getSelectedItem() == null || Ngay_List.getSelectedItem() == null){
             DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
-            
-//            for ( i = 1; i <= q; i++){}
-            i = 0;
             records.removeAllElements();
-            while(rs.next()){
-                records.insertElementAt(rs.getString("BatDau"), i);
-                i++; 
-            }
-//            records.setSelectedItem('');
-            connection.close();
         }
-        catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex);
+        else{
+            try{
+                connection = new MySQLConnection().Connect();
+
+                statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ? and ngaychieu = ?");
+                statement.setString(1, Phim_List.getSelectedItem().toString());
+                statement.setString(2, Rap_List.getSelectedItem().toString());
+                statement.setString(3, Ngay_List.getSelectedItem().toString());
+                rs = statement.executeQuery();
+                ResultSetMetaData stData = rs.getMetaData();
+
+                q = stData.getColumnCount();
+
+    //            DefaultTableModel records = (DefaultTableModel) Phim_List.getModel();
+
+
+                DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
+
+    //            for ( i = 1; i <= q; i++){}
+                i = 0;
+                records.removeAllElements();
+                while(rs.next()){
+                    records.insertElementAt(rs.getString("BatDau"), i);
+                    i++; 
+                }
+    //            records.setSelectedItem('');
+                connection.close();
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            }
         }
     }//GEN-LAST:event_Ngay_ListActionPerformed
 
     private void BatDau_ListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatDau_ListActionPerformed
         // TODO add your handling code here:
-        upDateDB();
+        if(Phim_List.getSelectedItem() != null && Rap_List.getSelectedItem() != null && Ngay_List.getSelectedItem() != null && BatDau_List.getSelectedItem() != null)
+            upDateDB();
     }//GEN-LAST:event_BatDau_ListActionPerformed
+
+    private void Ngay_ListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Ngay_ListItemStateChanged
+        // TODO add your handling code here:
+        DefaultComboBoxModel records = (DefaultComboBoxModel) BatDau_List.getModel();
+        records.removeAllElements();
+    }//GEN-LAST:event_Ngay_ListItemStateChanged
 
     /**
      * @param args the command line arguments 

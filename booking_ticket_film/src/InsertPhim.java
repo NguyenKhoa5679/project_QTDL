@@ -37,6 +37,7 @@ public class InsertPhim extends javax.swing.JFrame {
     public InsertPhim() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Cập nhật phim");
     }
     
 //    ==============================================START_FUNCTION==========================================

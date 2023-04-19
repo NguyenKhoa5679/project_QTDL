@@ -65,6 +65,7 @@ public class ThongKeVe extends javax.swing.JFrame {
     public ThongKeVe() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Thống kê vé");
     }
 
     /**

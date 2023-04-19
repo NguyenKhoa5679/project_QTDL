@@ -80,6 +80,7 @@ public class VeDaDat extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.maKh = maKH;
+        setTitle("Vé đã đặt");
     }
 
     /**
