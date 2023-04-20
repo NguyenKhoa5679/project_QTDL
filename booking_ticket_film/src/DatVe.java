@@ -407,7 +407,7 @@ public class DatVe extends javax.swing.JFrame {
             try{
                 connection = new MySQLConnection().Connect();
 
-                statement = connection.prepareStatement("SELECT distinct * FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ?");
+                statement = connection.prepareStatement("SELECT distinct ngaychieu FROM Rapchieu inner join lichchieu using(marap) inner join phim using(maphim) where tenphim = ? and marap = ?");
                 statement.setString(1, Phim_List.getSelectedItem().toString());
                 statement.setString(2, Rap_List.getSelectedItem().toString());
                 rs = statement.executeQuery();
