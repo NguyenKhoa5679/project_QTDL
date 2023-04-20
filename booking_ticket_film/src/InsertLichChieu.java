@@ -509,7 +509,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
             statement.executeUpdate();
             statement.executeUpdate();
             connection.close();
-            JOptionPane.showMessageDialog(this, "Record Delete");
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
 
             upDateDB();
         }
@@ -530,7 +530,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
             statement.setString(5, BatDau.getText());
             statement.executeUpdate();
             connection.close();
-            JOptionPane.showMessageDialog(this, "Record Update");
+            JOptionPane.showMessageDialog(this, "Sửa thành công");
             
             upDateDB();
         }
@@ -551,7 +551,7 @@ public class InsertLichChieu extends javax.swing.JFrame {
             statement.setString(4, BatDau.getText());
             statement.executeUpdate();
             connection.close();
-            JOptionPane.showMessageDialog(this, "Record Update");
+            JOptionPane.showMessageDialog(this, "Thêm Thành công");
             upDateDB();
         }
         catch(Exception ex){

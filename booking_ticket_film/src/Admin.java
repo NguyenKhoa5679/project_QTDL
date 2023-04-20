@@ -133,6 +133,7 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
         InsertPhim phim = new InsertPhim();
         phim.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ThemPhimActionPerformed
 
     private void ThemLichChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemLichChieuActionPerformed
@@ -140,6 +141,7 @@ public class Admin extends javax.swing.JFrame {
         this.setVisible(false);
         InsertLichChieu  LichChieu = new InsertLichChieu();
         LichChieu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ThemLichChieuActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

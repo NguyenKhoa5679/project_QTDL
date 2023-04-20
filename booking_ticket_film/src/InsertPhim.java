@@ -306,12 +306,12 @@ public class InsertPhim extends javax.swing.JFrame {
             statement.setString(4, ThoiLuong.getText());
             statement.executeUpdate();
             connection.close();
-           JOptionPane.showMessageDialog(this, "Record Added");
+           JOptionPane.showMessageDialog(this, "Thêm thành công");
            upDateDB();
            
         }
         catch(Exception ex){
-            JOptionPane.showMessageDialog(this, "Record Added Fail");   
+            JOptionPane.showMessageDialog(this, "Thêm thất bại");   
         }
 //        catch(ClassNotFoundException ex){
 //            java.util.logging.Logger.getLogger(InsertPhim.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -355,12 +355,12 @@ public class InsertPhim extends javax.swing.JFrame {
             statement.setString(4, ThoiLuong.getText());
             statement.executeUpdate();
             connection.close();
-           JOptionPane.showMessageDialog(this, "Record Updated");
+           JOptionPane.showMessageDialog(this, "Sửa thành công");
            upDateDB();
         }
         catch(Exception ex){
-//            JOptionPane.showMessageDialog(this, "Record Updated Fail");
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Sửa thất bại");
+//            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
     }//GEN-LAST:event_UpdateActionPerformed
@@ -394,12 +394,13 @@ public class InsertPhim extends javax.swing.JFrame {
             statement.setString(1,old_maphim);
             statement.executeUpdate();
             connection.close();
-            JOptionPane.showMessageDialog(this, "Record Delete");
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
             upDateDB();
             
         }
         catch(Exception ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+//            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Xóa thất bại");
         }
     }//GEN-LAST:event_DeleteActionPerformed
 

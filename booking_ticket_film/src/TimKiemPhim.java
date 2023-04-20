@@ -188,8 +188,9 @@ public class TimKiemPhim extends javax.swing.JFrame {
         else{
             try{
                 connection = new MySQLConnection().Connect();
-                String sql = "select * from phim" ;
-                sql += " where tenphim like concat('%', ?, '%')";
+//                String sql = "select * from phim" ;
+//                sql += " where tenphim like concat('%', ?, '%')";
+                String sql = "Call TimKiemPhim(?)";
                 statement = connection.prepareStatement(sql);
                 statement.setString(1, TenPhim.getText());
 
